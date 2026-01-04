@@ -1,0 +1,57 @@
+# aegis_config.yaml
+system:
+  name: "AEGIS-Corporate-HQ"
+  location: "Riyadh, Saudi Arabia"
+  
+networking:
+  discovery_range: "10.0.0.0/16"
+  credentials_vault: "/etc/aegis/vault.enc"
+  
+modules:
+  cisco_integration:
+    enabled: true
+    auto_backup: true
+    security_scan: true
+    
+  avaya_integration:
+    enabled: true
+    call_monitoring: true
+    fraud_detection: true
+    
+  surveillance:
+    enabled: true
+    face_recognition: true
+    license_plate_recognition: true
+    
+  safety_systems:
+    enabled: true
+    auto_evacuation: true
+    emergency_coordination: true
+    
+  smart_home:
+    enabled: false  # فقط للمباني السكنية
+    
+automations:
+  office_hours:
+    start: "08:00"
+    end: "18:00"
+    actions:
+      - enable_access_control
+      - start_surveillance
+      - monitor_network
+    
+  emergency_scenario:
+    triggers:
+      - fire_alarm
+      - security_breach
+      - power_outage
+    actions:
+      - unlock_emergency_exits
+      - activate_emergency_lights
+      - notify_emergency_services
+
+api:
+  enabled: true
+  port: 8000
+  authentication: "jwt"
+  rate_limit: "100/minute"
