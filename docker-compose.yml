@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # -----------------------
+  # 1. API Gateway (Entry Point)
+  # -----------------------
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - NETWORK_SERVICE_URL=http://network-service:5000
+      - PHYSICAL_SERVICE_URL=http://physical-service:3001
+      - IOT_SERVICE_URL=http://iot-service:3002
+    depends_on:
+      - network-service
+      - physical-service
+      - iot-service
+
+  # -----------------------
+  # 2. Network Security Service
+  # -----------------------
+  network-service:
+    build: ./network-service
+    ports:
+      - "5000:5000"
+
+  # -----------------------
+  # 3. Physical Security Service
+  # -----------------------
+  physical-service:
+    build: ./physical-service
+    ports:
+      - "3001:3001"
+
+  # -----------------------
+  # 4. IoT Security Service
+  # -----------------------
+  iot-service:
+    build: ./iot-service
+    ports:
+      - "3002:3002"
